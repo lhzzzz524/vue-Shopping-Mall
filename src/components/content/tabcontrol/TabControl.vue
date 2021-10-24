@@ -29,7 +29,7 @@ export default {
   methods: {
     clickBtn(index) {
       this.currentIndex = index;
-      //this.$emit("TabClick", index);
+      this.$emit("TabClick", index);
     },
   },
 };

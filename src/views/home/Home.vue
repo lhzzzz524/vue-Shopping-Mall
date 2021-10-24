@@ -1,66 +1,23 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav-center"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :Sbanners="banners" />
-    <home-recommend :Rrecommend="recommends"></home-recommend>
-    <home-feature />
-    <tab-control
-      :Ttitle="['流行', '新款', '精选']"
-      @TabClick="TabClick"
-    ></tab-control>
-    <goods-list :Ggoods="goods[type].list"></goods-list>
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+    <scroll
+      class="content"
+      ref="scroll"
+      :SprobeType="3"
+      @Scroll="ContentScroll"
+    >
+      <home-swiper :Sbanners="banners" />
+      <home-recommend :Rrecommend="recommends"></home-recommend>
+      <home-feature />
+      <tab-control
+        :Ttitle="['流行', '新款', '精选']"
+        @TabClick="TabClick"
+        class="tab-control"
+      ></tab-control>
+      <goods-list :Ggoods="goods[type].list"></goods-list>
+    </scroll>
+    <back-top @click.native="backTop" v-show="isShow"></back-top>
   </div>
 </template>
 
@@ -70,6 +27,8 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodsList from "components/content/goods/GoodsList.vue";
+import Scroll from "../../components/common/scroll/Scroll.vue";
+import BackTop from "../../components/content/backtop/BackTop.vue";
 
 import HomeSwiper from "./childCopms/HomeSwiper";
 import HomeRecommend from "./childCopms/HomeRecommend.vue";
@@ -83,6 +42,8 @@ export default {
     HomeFeature,
     TabControl,
     GoodsList,
+    Scroll,
+    BackTop,
   },
   data() {
     return {
@@ -95,6 +56,7 @@ export default {
         sell: { page: 0, list: [] },
       },
       type: "pop",
+      isShow: false,
     };
   },
   created() {
@@ -120,6 +82,13 @@ export default {
       }
     },
 
+    backTop() {
+      this.$refs.scroll.scrollTop(0, 0, 600);
+    },
+    ContentScroll(Yscroll) {
+      -Yscroll.y > 1000 ? (this.isShow = true) : (this.isShow = false);
+    },
+
     //网络请求相关函数
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
@@ -132,6 +101,7 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.data.list); //把拿到的第一页得数据加到goods里面得list
         this.goods[type].page = page; //因为已经有数据 所以goods里面的page等于服务器里的page
+        console.log(this.goods);
       });
     },
   },
@@ -139,8 +109,31 @@ export default {
 </script>
 
 <style  scoped>
+#home {
+  position: relative;
+  /* 
+  视口单位中的“视口”，桌面端指的是浏览器的可视区域；移动端指的就是Viewport中的Layout Viewport(布局视口)
+  vh	1vh = 视口高度的1%
+  */
+  height: 100vh;
+}
 .home-nav-center {
   background-color: var(--color-tint);
   color: #fff;
+}
+/* 方法一：
+.content {
+  position: absolute;
+  overflow: hidden;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+}
+*/
+/*方法二：calc动态计算长度值。 */
+.content {
+  height: calc(100% - 93px);
+  overflow: hidden;
 }
 </style>
