@@ -9,8 +9,6 @@ export default {
     return {};
   },
   components: {
-    Daohanglan,
-    MainTabBar,
   },
 };
 </script>

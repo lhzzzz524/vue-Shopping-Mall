@@ -55,7 +55,7 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
-      type: "pop",
+      type: "pop", //默认流行页数据
       isShow: false,
     };
   },
@@ -101,7 +101,6 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.data.list); //把拿到的第一页得数据加到goods里面得list
         this.goods[type].page = page; //因为已经有数据 所以goods里面的page等于服务器里的page
-        console.log(this.goods);
       });
     },
   },
