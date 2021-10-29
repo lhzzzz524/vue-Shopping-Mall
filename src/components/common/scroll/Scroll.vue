@@ -15,6 +15,10 @@ export default {
       type: Number,
       default: 0,
     },
+    isPullUpload: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -23,19 +27,34 @@ export default {
   },
   methods: {
     scrollTop(x, y, time) {
-      this.scroll.scrollTo(x, y, time); //scrollto方法  x 横轴坐标  y 纵轴坐标 time 滚动动画执行的时长
+      this.scroll?.scrollTo(x, y, time); //scrollto方法  x 横轴坐标  y 纵轴坐标 time 滚动动画执行的时长
+    },
+    finishPullUp() {
+      this.scroll?.finishPullUp();
+    },
+    refresh() {
+      // console.log("---");
+      this.scroll.refresh();
     },
   },
   mounted() {
     this.scroll = new Bscroll(this.$refs.wrapper, {
-      observeDOM: true, //会检测scroller内部DOM变化，自动调用refresh方法重新计算来保证滚动的正确性。它会额外增加一些性能开销
+      observeDOM: true, //它无法探测到 img 标签的是否加载完成，因此对于 content 内部含有不确定高度的图片，需要等图片加载完成再调用 bs.refresh() 来重新计算可滚动尺寸。
+      // observeImage: true, //v2.1.0 版本后 observe-image来探测 img 标签的加载，因此这两者可以搭配起来 就不需要每张图片加载重新计算高度 这里还是采用计算图片高度方法
       click: true,
       probeType: this.SprobeType,
+      pullUpLoad: this.isPullUpload,
     });
-    this.scroll.on("scroll", (Yscroll) => {
-      //独立组件 别的组件可能需要也可能不需要调用这个事件 所以自定义事件发射到home组件 来完成这个动作
-      this.$emit("Scroll", Yscroll);
-    });
+    if (this.SprobeType === 2 || this.SprobeType === 3) {
+      this.scroll.on("scroll", (Yscroll) => {
+        this.$emit("Scroll", Yscroll);
+      });
+    }
+    if (this.isPullUpload) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("loadMore");
+      });
+    }
   },
 };
 </script>

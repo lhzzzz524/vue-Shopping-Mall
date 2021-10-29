@@ -2,7 +2,7 @@
   <swiper>
     <swiper-item v-for="(item, index) in Sbanners" :key="index">
       <a :href="item.link">
-        <img :src="item.image" alt="" />
+        <img :src="item.image" alt="" @load="loadOver" />
       </a>
     </swiper-item>
   </swiper>
@@ -20,9 +20,22 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      isTrue: false,
+    };
+  },
   components: {
     Swiper,
     SwiperItem,
+  },
+  methods: {
+    loadOver() {
+      if (!this.isTrue) {
+        this.isTrue = true;
+        this.$emit("imgLoadOver");
+      }
+    },
   },
 };
 </script>

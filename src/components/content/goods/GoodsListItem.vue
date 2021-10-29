@@ -1,6 +1,6 @@
 <template>
   <div class="GLIitem">
-    <img :src="GLIitem.show.img" alt="" />
+    <img :src="GLIitem.show.img" @load="imgLoad" @click="btnCilck" alt="" />
     <div class="goods-info">
       <p>{{ GLIitem.title }}</p>
       <span class="price">{{ GLIitem.price }}</span>
@@ -17,6 +17,14 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  methods: {
+    imgLoad() {
+      this.$bus.$emit("imgLoad");
+    },
+    btnCilck() {
+      this.$router.push(`/detail/${this.GLIitem.iid}`);
     },
   },
 };

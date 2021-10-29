@@ -38,6 +38,7 @@ export default {
 <style  scoped>
 .tab-control {
   display: flex;
+  background-color: rgb(255, 255, 255);
 }
 .tab-control-item {
   flex: 1;
@@ -45,7 +46,7 @@ export default {
   height: 40px;
   line-height: 40px;
   font-size: 15px;
-  margin: 0 36px;
+  margin: 5px 36px;
 }
 .active {
   border-bottom: 2px solid var(--color-high-text);
