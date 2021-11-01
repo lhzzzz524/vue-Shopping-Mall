@@ -83,8 +83,8 @@ export default {
     this.$bus.$on("imgLoad", debounce(this.$refs.scroll.refresh, 50));
   },
   activated() {
+    this.$refs.scroll.refresh(); //返回页面 先重新计算scroll高度
     this.$refs.scroll.scrollTop(0, this.leave, 0);
-    this.$refs.scroll.refresh();
   },
   deactivated() {
     this.leave = this.$refs.scroll.scroll.y;
