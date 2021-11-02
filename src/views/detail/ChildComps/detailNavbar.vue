@@ -45,7 +45,6 @@ export default {
 }
 .title {
   display: flex;
-  flex: 1;
 }
 .title div {
   flex: 1;

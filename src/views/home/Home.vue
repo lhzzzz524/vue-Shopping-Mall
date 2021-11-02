@@ -46,6 +46,7 @@ import HomeRecommend from "./childCopms/HomeRecommend.vue";
 import HomeFeature from "./childCopms/HomeFeature.vue";
 
 export default {
+  name: "Home",
   components: {
     NavBar,
     HomeSwiper,
