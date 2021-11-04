@@ -10,7 +10,7 @@ export const getDetail = iid => {
 };
 
 export class Goods {
-  constructor(itemInfo, columns, services,myServices) {
+  constructor(itemInfo, columns, services, myServices) {
     this.title = itemInfo.title;
     this.newPrice = itemInfo.price;
     this.oldPrice = itemInfo.oldPrice;
@@ -18,6 +18,16 @@ export class Goods {
     this.color = itemInfo.discountBgColor;
     this.columns = columns;
     this.services = services;
-    this.myServices = myServices
+    this.myServices = myServices;
+  }
+}
+
+export class Shop {
+  constructor(shopInfo, myTotal) {
+    this.logo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.allTreasure = shopInfo.cFans;
+    this.score = shopInfo.score;
+    this.total = myTotal;
   }
 }

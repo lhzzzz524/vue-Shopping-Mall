@@ -2,7 +2,7 @@
   <div class="describe" v-if="Object.keys(goods).length">
     <h4 class="title">{{ goods.title }}</h4>
     <div class="price">
-      <span class="new gap">{{ goods.newPrice }}</span>
+      <span class="new gap" ref="test">{{ goods.newPrice }}</span>
       <span class="old gap">{{ goods.oldPrice }}</span>
       <span
         class="desc"
@@ -40,7 +40,7 @@ export default {
       newdeliver: [],
     };
   },
-  mounted() {},
+  created() {},
 };
 </script>
 
@@ -87,7 +87,7 @@ export default {
   margin: 15px 0;
 }
 .img {
-  margin-bottom: -1px;
+  margin-bottom: -2px;
   width: 15px;
   height: 15px;
 }

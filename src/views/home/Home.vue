@@ -9,7 +9,7 @@
       ref="tabControlTop"
     ></tab-control>
     <scroll
-      class="content"
+      class="homeContent"
       ref="scroll"
       :SprobeType="3"
       :isPullUpload="true"
@@ -169,7 +169,7 @@ export default {
 }
 */
 /*方法二：calc动态计算长度值。 */
-.content {
+.homeContent {
   height: calc(100% - 93px);
   overflow: hidden;
 }
