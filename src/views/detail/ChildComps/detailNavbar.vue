@@ -24,13 +24,14 @@ export default {
   },
   data() {
     return {
-      title: ["商品", "参数", "评论", "推荐"],
+      title: ["商品", "参数"],
       btnCurrIndex: 0,
     };
   },
   methods: {
     btnTitle(index) {
       this.btnCurrIndex = index;
+      this.$emit("clickTitle", index);
     },
     back() {
       this.$router.back();
